@@ -35,7 +35,6 @@ char *str_replace(char initial[], char replace[], char with[], char dest[])
             }
             pos_indexes[index_count] = i;
             index_count++;
-            
         }
     }
     dest = initial;
@@ -46,8 +45,8 @@ char *str_replace(char initial[], char replace[], char with[], char dest[])
 int main()
 {
     char name[] = "Harry";
-    char rep[]  = "Harry";
-    char with[] = "Lewis";
+    char rep[]  = "y";
+    char with[] = "s";
     char dest[10];
 
     str_replace(name, rep, with, dest);
