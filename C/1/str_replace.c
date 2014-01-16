@@ -1,43 +1,43 @@
 #include <string.h>
+#include <stdlib.h>
 #include "str_replace.h"
 
-char *str_replace(char initial[], char replace[], char with[], char dest[])
+char *str_replace(char *orig, char *rep, char *with)
 {
-    int i = 0;
-    int r = 0;
+    char *result;
+    char *ins;
+    char *tmp;
+    int len_rep;
+    int len_with;
+    int len_front;
+    int count;
 
-    int index_count = 0;
-    int pos_indexes[100];
+    if (!orig)
+        return NULL;
+    if (!rep)
+        rep = "";
+    len_rep = strlen(rep);
+    if (!with)
+        with = "";
+    len_with = strlen(with);
 
-    int initial_length = 0;
-
-    // TODO: Replace hardcoded 100
-    char fully_formed_string[100];
-
-    for (i = 0; i < strlen(initial);) {
-        if (initial[i] != replace[r]) {
-            r++;
-        } else {
-            fully_formed_string[i] = replace[i];
-            i++; r++;
-            
-            if (strcmp(fully_formed_string,replace) == 0) {
-
-                for (int rep = 0; rep < index_count; rep++) {
-                    initial[pos_indexes[rep]] = with[rep];
-                }
-
-                int final_string_count = 0;
-                while (strlen(initial) != strlen(dest)) {
-                    dest[final_string_count] = initial[final_string_count];
-                    final_string_count++;
-                }
-            }
-            pos_indexes[index_count] = i;
-            index_count++;
-        }
+    ins = orig;
+    for (count = 0; (tmp = strstr(ins, rep)); ++count) {
+        ins = tmp + len_rep;
     }
-    dest = initial;
-    initial = "";
-    return dest;
+
+    tmp = result = malloc(strlen(orig) + (len_with - len_rep) * count + 1);
+
+    if (!result)
+        return NULL;
+
+    while (count--) {
+        ins = strstr(orig, rep);
+        len_front = ins - orig;
+        tmp = strncpy(tmp, orig, len_front) + len_front;
+        tmp = strcpy(tmp, with) + len_with;
+        orig += len_front + len_rep;
+    }
+    strcpy(tmp, orig);
+    return result;
 }

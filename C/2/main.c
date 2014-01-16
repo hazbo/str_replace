@@ -6,11 +6,10 @@ int main()
     char name[] = "Hello, World!";
     char rep[]  = "World";
     char with[] = "There";
-    char dest[10];
 
     char *res = str_replace(name, rep, with);
 
-    printf("%s\n",res);
+    printf("\n\n\nFinal Result: %s\n\n",res);
 
     return 0;
 }
